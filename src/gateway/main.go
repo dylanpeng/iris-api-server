@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"github.com/BurntSushi/toml"
+	config2 "juggernaut/gateway/config"
 )
 
 var (
@@ -14,4 +16,14 @@ func main() {
 	flag.Parse()
 
 	fmt.Printf("flagC: %s, flagN: %d \n", *flagC, *flagN)
+
+	config := &config2.Config{}
+
+	_, err := toml.DecodeFile(*flagC, config)
+
+	if err != nil {
+		fmt.Printf("%s\n", err)
+	}
+
+	fmt.Printf("%+v\n", *config)
 }
