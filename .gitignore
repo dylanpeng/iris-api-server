@@ -1,3 +1,4 @@
 pkg/
 /src/go.sum
 /bin/
+/src/lib/proto/

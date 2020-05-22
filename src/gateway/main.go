@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/BurntSushi/toml"
 	config2 "juggernaut/gateway/config"
+	"juggernaut/lib/proto/juggernaut/common/base"
 )
 
 var (
@@ -26,4 +27,12 @@ func main() {
 	}
 
 	fmt.Printf("%+v\n", *config)
+
+	demo()
+}
+
+func demo() {
+	e := &base.Error{}
+
+	fmt.Printf("%s", e)
 }

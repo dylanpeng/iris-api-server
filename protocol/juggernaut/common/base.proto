@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package juggernaut.protocol.common.base;
+option go_package = "juggernaut/lib/api-proto/common/base";
+
+// Trace
+message Trace {
+    string trace_id = 1;
+    string caller = 2;
+}
+
+// Error model
+message Error {
+    // response code
+    int64 code = 1;
+
+    // response message
+    string message = 2;
+}
+
+// HTTP error response
+message ErrorRsp {
+    // error message
+    Error error = 1;
+}
