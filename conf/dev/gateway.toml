@@ -26,3 +26,12 @@ enable            = true
 endpoint          = "/ws"
 library           = "/ws.js"
 idle_time         = 60
+
+[log]
+dir          = "./logs"
+prefix       = "juggernaut"
+level        = "debug"
+time_format  = "2006-01-02 15:04:05.000"
+color        = false
+terminal     = false
+show_ip      = false

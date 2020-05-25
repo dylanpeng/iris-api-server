@@ -3,29 +3,40 @@ package main
 import (
 	"flag"
 	"fmt"
+	"juggernaut/common"
 	"juggernaut/gateway/config"
 	"log"
 	"os"
 	"os/signal"
+	"runtime"
 	"syscall"
 )
 
 var (
-	flagC = flag.String("c", "config.toml", "config file path")
-	flagN = flag.Int("n", 1, "number")
+	configFile = flag.String("c", "config.toml", "config file path")
+	version    = flag.Bool("v", false, "version")
+	buildTime  = "2018-01-01T00:00:00"
+	gitHash    = "master"
 )
 
 func main() {
 	flag.Parse()
 
+	// set max cpu core
+	runtime.GOMAXPROCS(runtime.NumCPU())
+
 	// parse config file
-	if err := config.Init(*flagC); err != nil {
+	if err := config.Init(*configFile); err != nil {
 		log.Fatalf("Fatal Error: can't parse config file!!!\n%s", err)
 	}
 
-	conf := config.GetConfig()
+	// init log
+	if err := common.InitLogger(config.GetLog()); err != nil {
+		log.Fatalf("Fatal Error: can't initialize logger!!!\n%s", err)
+	}
 
-	fmt.Printf("begin %+v\n", *conf)
+	// notice version
+	common.Logger.Infof("server version <%s>", gitHash)
 
 	// waitting for exit signal
 	exit := make(chan os.Signal)

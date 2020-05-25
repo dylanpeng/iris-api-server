@@ -5,13 +5,15 @@ import (
 	"juggernaut/common/env"
 	jGrpc "juggernaut/lib/grpc"
 	"juggernaut/lib/http"
+	"juggernaut/lib/logger"
 )
 
 var config *Config
 
 type Config struct {
 	Env    *env.Config
-	Server *ServerConfig `toml:"server"`
+	Server *ServerConfig  `toml:"server"`
+	Log    *logger.Config `toml:"log"`
 }
 
 type ServerConfig struct {
@@ -42,4 +44,8 @@ func GetGrpc() *jGrpc.Config {
 
 func GetHttp() *http.Config {
 	return config.Server.Http
+}
+
+func GetLog() *logger.Config {
+	return config.Log
 }
