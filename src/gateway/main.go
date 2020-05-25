@@ -3,9 +3,11 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/BurntSushi/toml"
-	config2 "juggernaut/gateway/config"
-	"juggernaut/lib/proto/juggernaut/common/base"
+	"juggernaut/gateway/config"
+	"log"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 var (
@@ -16,23 +18,29 @@ var (
 func main() {
 	flag.Parse()
 
-	fmt.Printf("flagC: %s, flagN: %d \n", *flagC, *flagN)
-
-	config := &config2.Config{}
-
-	_, err := toml.DecodeFile(*flagC, config)
-
-	if err != nil {
-		fmt.Printf("%s\n", err)
+	// parse config file
+	if err := config.Init(*flagC); err != nil {
+		log.Fatalf("Fatal Error: can't parse config file!!!\n%s", err)
 	}
 
-	fmt.Printf("%+v\n", *config)
+	conf := config.GetConfig()
 
-	demo()
-}
+	fmt.Printf("begin %+v\n", *conf)
 
-func demo() {
-	e := &base.Error{}
+	// waitting for exit signal
+	exit := make(chan os.Signal)
+	stopSigs := []os.Signal{
+		syscall.SIGHUP,
+		syscall.SIGINT,
+		syscall.SIGQUIT,
+		syscall.SIGABRT,
+		syscall.SIGKILL,
+		syscall.SIGTERM,
+	}
+	signal.Notify(exit, stopSigs...)
 
-	fmt.Printf("%s", e)
+	// catch exit signal
+	sign := <-exit
+	fmt.Printf("stop by exit signal '%s'", sign)
+	//common.Logger.Infof("stop by exit signal '%s'", sign)
 }
