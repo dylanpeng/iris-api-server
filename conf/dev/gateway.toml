@@ -6,7 +6,7 @@ ws_code      = "json"
 bs_code      = "json"
 
 [server]
-network_interface = "eth0"
+network_interface = "en0"
 bind_interface    = false
 use_interface_ip  = true
 

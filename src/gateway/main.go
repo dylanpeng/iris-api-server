@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"juggernaut/common"
 	"juggernaut/gateway/config"
+	"juggernaut/gateway/router"
+	"juggernaut/gateway/util"
 	"log"
 	"os"
 	"os/signal"
@@ -35,6 +37,10 @@ func main() {
 		log.Fatalf("Fatal Error: can't initialize logger!!!\n%s", err)
 	}
 
+	// start http server
+	util.InitHttpServer(router.Router)
+	common.Logger.Infof("http server start at <%s>", config.GetHttp().GetAddr())
+
 	// notice version
 	common.Logger.Infof("server version <%s>", gitHash)
 
@@ -53,5 +59,5 @@ func main() {
 	// catch exit signal
 	sign := <-exit
 	fmt.Printf("stop by exit signal '%s'", sign)
-	//common.Logger.Infof("stop by exit signal '%s'", sign)
+	common.Logger.Infof("stop by exit signal '%s'", sign)
 }

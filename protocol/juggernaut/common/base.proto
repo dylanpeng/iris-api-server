@@ -23,3 +23,66 @@ message ErrorRsp {
     // error message
     Error error = 1;
 }
+
+// Websocket base uplink message
+message WsRequest {
+    // payload method
+    string method = 1;
+}
+
+// Websocket base downlink message
+message WsResponse {
+    // payload method
+    string method = 1;
+
+    // error message
+    Error err = 2;
+}
+
+// Websocket uplink message: /ping
+message PingReq {
+    // payload method: /ping
+    string method = 1;
+
+    // timestamp
+    int64 timestamp = 2;
+
+    // progress order id
+    int64 order_id = 3;
+
+    // progress order status
+    int32 order_status = 4;
+
+    // longitude
+    double lng = 5;
+
+    // latitude
+    double lat = 6;
+
+    // driver status default -1
+    int32 driver_status = 7;
+}
+
+// Websocket downlink message: /pong
+message PongRsp {
+    // payload method: /pong
+    string method = 1;
+
+    // timestamp
+    int64 timestamp = 2;
+
+    // order status out of sync or not
+    bool out_sync = 3;
+}
+
+// Websocket uplink message: /auth
+message AuthReq {
+    // payload method: /auth
+    string method = 1;
+
+    // token
+    string token = 2;
+
+    // app 0 ride 1 hitch
+    int32 app = 3;
+}
