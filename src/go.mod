@@ -26,5 +26,6 @@ require (
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	golang.org/x/crypto v0.0.0-20200510223506-06a226fb4e37 // indirect
+	google.golang.org/grpc v1.29.1
 	gopkg.in/yaml.v2 v2.3.0 // indirect
 )

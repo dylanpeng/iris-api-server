@@ -7,15 +7,23 @@ import (
 	"juggernaut/common/consts"
 	"juggernaut/common/env"
 	"juggernaut/gateway/config"
+	"juggernaut/lib/grpc"
 	"juggernaut/lib/http"
 )
 
 var HttpServer *http.Server
+var GrpcServer *grpc.Server
 
 func InitHttpServer(router http.Router) {
 	c := config.GetHttp()
 	HttpServer = http.NewServer(c, router, common.Logger)
 	HttpServer.Start()
+}
+
+func InitGrpcServer(router grpc.Router) error {
+	c := config.GetGrpc()
+	GrpcServer = grpc.NewServer(c, router, common.Logger)
+	return GrpcServer.Start()
 }
 
 func SetCtxCoder(ctx context.Context, encoding string) {

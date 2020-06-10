@@ -6,17 +6,17 @@ ws_code      = "json"
 bs_code      = "json"
 
 [server]
-network_interface = "eth0"
+network_interface = "en0"
 bind_interface    = false
 use_interface_ip  = true
 
 [server.grpc]
 host              = "0.0.0.0"
-port              = 1081
+port              = 11081
 
 [server.http]
 host              = "0.0.0.0"
-port              = 1080
+port              = 11080
 charset           = "UTF-8"
 gzip              = true
 pprof             = true
@@ -26,3 +26,12 @@ enable            = true
 endpoint          = "/ws"
 library           = "/ws.js"
 idle_time         = 60
+
+[log]
+dir          = "./logs"
+prefix       = "juggernaut"
+level        = "debug"
+time_format  = "2006-01-02 15:04:05.000"
+color        = false
+terminal     = false
+show_ip      = false

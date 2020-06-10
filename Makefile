@@ -18,11 +18,12 @@ p:
 	rm -rf src/lib/proto/*
 
 	cd src; protoc -I ../protocol/juggernaut --gofast_out=plugins=grpc:. common/base.proto; cd -
+	cd src; protoc -I ../protocol/juggernaut --gofast_out=plugins=grpc:. service/gateway.proto; cd -
 
 	mv src/juggernaut/lib/api-proto src/lib/proto/juggernaut
 
 	ls src/lib/proto/*/*/*/*.pb.go | xargs sed -i -e "s/,omitempty//"
-# 	ls src/lib/proto/juggernaut/*/*/*.pb.go | xargs sed -i -e "s@\"lib/oproto/@\"oexpress/lib/proto/oexpress/@"
+	ls src/lib/proto/juggernaut/*/*/*.pb.go | xargs sed -i -e "s@api-proto/@proto/juggernaut/@"
 	find src/lib/proto -name "*.pb.go-e"  | xargs rm -f
 
 	rm -rf src/juggernaut

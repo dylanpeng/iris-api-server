@@ -37,6 +37,13 @@ func main() {
 		log.Fatalf("Fatal Error: can't initialize logger!!!\n%s", err)
 	}
 
+	// start grpc server
+	if err := util.InitGrpcServer(router.Router); err != nil {
+		log.Fatalf("Fatal Error: can't initialize grpc server!!!\n%s", err)
+	}
+
+	common.Logger.Infof("grpc server start at <%s>", config.GetGrpc().GetAddr())
+
 	// start http server
 	util.InitHttpServer(router.Router)
 	common.Logger.Infof("http server start at <%s>", config.GetHttp().GetAddr())

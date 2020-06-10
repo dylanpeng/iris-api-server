@@ -12,11 +12,11 @@ use_interface_ip  = true
 
 [server.grpc]
 host              = "0.0.0.0"
-port              = 1081
+port              = 11081
 
 [server.http]
 host              = "0.0.0.0"
-port              = 1080
+port              = 11080
 charset           = "UTF-8"
 gzip              = true
 pprof             = true

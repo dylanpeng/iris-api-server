@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+import "common/base.proto";
+
+package juggernaut.protocol.service.gateway;
+option go_package = "juggernaut/lib/api-proto/service/gateway";
+
+// GRPC request: /gateway/push
+message TestReq {
+    // test id
+    int32 test_id = 1;
+
+    // test name
+    string test_name = 2;
+
+    // trace
+    common.base.Trace trace = 99;
+}
+
+// GRPC response: /gateway/push
+message TestRsp {
+    // error message
+    common.base.Error err = 1;
+
+    // test id
+    int32 test_id = 2;
+
+    // test name
+    string test_name = 3;
+
+    // trace
+    common.base.Trace trace = 99;
+}
+
+// gateway GRPC service
+service GatewayService {
+    rpc Push (TestReq) returns (TestRsp);
+}
