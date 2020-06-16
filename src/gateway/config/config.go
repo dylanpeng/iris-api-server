@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/BurntSushi/toml"
 	"juggernaut/common/env"
+	"juggernaut/common/grpc"
 	jGrpc "juggernaut/lib/grpc"
 	"juggernaut/lib/http"
 	"juggernaut/lib/logger"
@@ -13,9 +14,10 @@ import (
 var config *Config
 
 type Config struct {
-	Env    *env.Config    `toml:"env"`
-	Server *ServerConfig  `toml:"server"`
-	Log    *logger.Config `toml:"log"`
+	Env     *env.Config    `toml:"env"`
+	Server  *ServerConfig  `toml:"server"`
+	Log     *logger.Config `toml:"log"`
+	GrpcSrv *grpc.Config   `toml:"grpc_srv"`
 }
 
 type ServerConfig struct {
@@ -85,4 +87,8 @@ func GetHttp() *http.Config {
 
 func GetLog() *logger.Config {
 	return config.Log
+}
+
+func GetGrpcSrv() *grpc.Config {
+	return config.GrpcSrv
 }

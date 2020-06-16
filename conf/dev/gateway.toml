@@ -35,3 +35,12 @@ time_format  = "2006-01-02 15:04:05.000"
 color        = false
 terminal     = false
 show_ip      = false
+
+[grpc_srv]
+idle      = 30
+ttl       = 1800
+poolsize  = 512
+
+[grpc_srv.servers.juggernaut_protocol_service_gateway]
+host      = "127.0.0.1"
+port      = 11081

@@ -14,6 +14,6 @@ const (
 	PlatformIos
 )
 
-const GrpcTimeout = time.Millisecond * 1000
+const GrpcTimeout = time.Millisecond * 10000
 const GrpcVoucherTimeout = time.Millisecond * 2000
 const WsAuthTimeout = 15

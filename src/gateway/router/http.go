@@ -16,4 +16,10 @@ func (r *router) RegHttpHandler(app *iris.Application) {
 	{
 		userParty.Post("/login", ctrl.User.Login)
 	}
+
+	// test grpc group
+	testGrpcParty := app.Party("/test")
+	{
+		testGrpcParty.Post("/grpc/push", ctrl.TestGrpc.Push)
+	}
 }

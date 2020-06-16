@@ -37,6 +37,9 @@ func main() {
 		log.Fatalf("Fatal Error: can't initialize logger!!!\n%s", err)
 	}
 
+	// init grpc pool
+	common.InitGrpcSrv(config.GetGrpcSrv())
+
 	// start grpc server
 	if err := util.InitGrpcServer(router.Router); err != nil {
 		log.Fatalf("Fatal Error: can't initialize grpc server!!!\n%s", err)
