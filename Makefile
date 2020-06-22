@@ -27,3 +27,10 @@ p:
 	find src/lib/proto -name "*.pb.go-e"  | xargs rm -f
 
 	rm -rf src/juggernaut
+
+clean:
+	rm -fr bin/*
+	rm -fr lbin/*
+	chmod -R 766 pkg/*
+	\rm -r pkg/*
+	rm src/go.sum
