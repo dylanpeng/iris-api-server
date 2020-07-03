@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+import "common/base.proto";
+
+package juggernaut.protocol.common.message;
+option go_package = "juggernaut/lib/api-proto/common/message";
+
+// http request: /kafka/push
+message KafkaMessagePushReq {
+    // payload method
+    string message = 1;
+}
+
+// http response: /kafka/push
+message KafkaMessagePushRsp {
+    // error message
+    base.Error err = 1;
+}

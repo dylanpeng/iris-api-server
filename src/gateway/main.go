@@ -37,6 +37,11 @@ func main() {
 		log.Fatalf("Fatal Error: can't initialize logger!!!\n%s", err)
 	}
 
+	// init kafka producer
+	if err := util.InitKaProducer(); err != nil {
+		log.Fatalf("Fatal Error: can't initialize kafka!!!\n%s", err)
+	}
+
 	// init grpc pool
 	common.InitGrpcSrv(config.GetGrpcSrv())
 

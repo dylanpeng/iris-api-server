@@ -18,6 +18,7 @@ p:
 	rm -rf src/lib/proto/*
 
 	cd src; protoc -I ../protocol/juggernaut --gofast_out=plugins=grpc:. common/base.proto; cd -
+	cd src; protoc -I ../protocol/juggernaut --gofast_out=plugins=grpc:. common/message.proto; cd -
 	cd src; protoc -I ../protocol/juggernaut --gofast_out=plugins=grpc:. service/gateway.proto; cd -
 
 	mv src/juggernaut/lib/api-proto src/lib/proto/juggernaut

@@ -9,10 +9,12 @@ import (
 	"juggernaut/gateway/config"
 	"juggernaut/lib/grpc"
 	"juggernaut/lib/http"
+	"juggernaut/lib/kafka"
 )
 
 var HttpServer *http.Server
 var GrpcServer *grpc.Server
+var KaProducer *kafka.Producer
 
 func InitHttpServer(router http.Router) {
 	c := config.GetHttp()
@@ -42,4 +44,10 @@ func GetCtxCoder(ctx context.Context) coder.ICoder {
 	} else {
 		return env.HttpCoder
 	}
+}
+
+func InitKaProducer() (err error) {
+	kaConf := config.GetKaProducer()
+	KaProducer, err = kafka.NewProducer(kaConf, common.Logger)
+	return
 }

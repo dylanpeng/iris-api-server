@@ -17,6 +17,12 @@ func (r *router) RegHttpHandler(app *iris.Application) {
 		userParty.Post("/login", ctrl.User.Login)
 	}
 
+	// user group
+	kafkaParty := app.Party("/kafka")
+	{
+		kafkaParty.Post("/push", ctrl.Message.PushKafkaMessage)
+	}
+
 	// test grpc group
 	testGrpcParty := app.Party("/test")
 	{

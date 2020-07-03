@@ -7,6 +7,7 @@ import (
 	"juggernaut/common/grpc"
 	jGrpc "juggernaut/lib/grpc"
 	"juggernaut/lib/http"
+	"juggernaut/lib/kafka"
 	"juggernaut/lib/logger"
 	"juggernaut/lib/net2"
 )
@@ -14,10 +15,11 @@ import (
 var config *Config
 
 type Config struct {
-	Env     *env.Config    `toml:"env"`
-	Server  *ServerConfig  `toml:"server"`
-	Log     *logger.Config `toml:"log"`
-	GrpcSrv *grpc.Config   `toml:"grpc_srv"`
+	Env        *env.Config           `toml:"env"`
+	Server     *ServerConfig         `toml:"server"`
+	Log        *logger.Config        `toml:"log"`
+	GrpcSrv    *grpc.Config          `toml:"grpc_srv"`
+	KaProducer *kafka.ProducerConfig `toml:"kafka"`
 }
 
 type ServerConfig struct {
@@ -91,4 +93,8 @@ func GetLog() *logger.Config {
 
 func GetGrpcSrv() *grpc.Config {
 	return config.GrpcSrv
+}
+
+func GetKaProducer() *kafka.ProducerConfig {
+	return config.KaProducer
 }
