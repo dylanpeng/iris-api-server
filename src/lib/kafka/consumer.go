@@ -30,8 +30,11 @@ func (c *Consumer) run() {
 	c.wg.Add(c.c.Worker + 2)
 
 	for i := 0; i < c.c.Worker; i++ {
-
+		go c.receive()
 	}
+
+	go c.logErr()
+	go c.logNotice()
 }
 
 func (c *Consumer) Stop() {
@@ -95,6 +98,7 @@ func NewConsumer(c *ConsumerConfig, handler func([]byte) error, logger *logger.L
 	config := cluster.NewConfig()
 	config.Consumer.Return.Errors = true
 	config.Group.Return.Notifications = true
+	config.Consumer.Offsets.CommitInterval = 1
 
 	if c.OffsetNewest {
 		config.Consumer.Offsets.Initial = sarama.OffsetNewest

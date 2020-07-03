@@ -48,7 +48,7 @@ port      = 11081
 [kafka]
 brokers  = [ "127.0.0.1:9092" ]
 
-[kafka_consumer]
+[kafka_consumer.test]
 brokers         = [ "127.0.0.1:9092" ]
 topic           = "test"
 group           = "group1"
