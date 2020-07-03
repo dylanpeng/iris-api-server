@@ -51,6 +51,13 @@ brokers  = [ "127.0.0.1:9092" ]
 [kafka_consumer.test]
 brokers         = [ "127.0.0.1:9092" ]
 topic           = "test"
-group           = "group1"
+group           = "a"
+worker          = 2
+offset_newest   = true
+
+[kafka_consumer.test2]
+brokers         = [ "127.0.0.1:9092" ]
+topic           = "test"
+group           = "a"
 worker          = 2
 offset_newest   = true

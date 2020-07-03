@@ -35,7 +35,8 @@ func main() {
 
 	// init kafka consumer
 	util.InitConsumers(map[string]func([]byte) error{
-		"test": logic.ReceiveMessage,
+		"test":  logic.ReceiveMessage,
+		"test2": logic.ReceiveMessage2,
 	})
 
 	common.Logger.Infof("kafka consumer start")

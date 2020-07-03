@@ -6,6 +6,7 @@ import (
 	cluster "github.com/bsm/sarama-cluster"
 	"juggernaut/lib/logger"
 	"sync"
+	"time"
 )
 
 type ConsumerConfig struct {
@@ -98,7 +99,7 @@ func NewConsumer(c *ConsumerConfig, handler func([]byte) error, logger *logger.L
 	config := cluster.NewConfig()
 	config.Consumer.Return.Errors = true
 	config.Group.Return.Notifications = true
-	config.Consumer.Offsets.CommitInterval = 1
+	config.Consumer.Offsets.CommitInterval = 10 * time.Second
 
 	if c.OffsetNewest {
 		config.Consumer.Offsets.Initial = sarama.OffsetNewest
