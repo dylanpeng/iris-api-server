@@ -2,14 +2,17 @@ package router
 
 import (
 	"github.com/kataras/iris"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	ctrl "juggernaut/gateway/logic/control"
 	"juggernaut/gateway/logic/middleware"
+	"juggernaut/lib/http"
 )
 
 func (r *router) RegHttpHandler(app *iris.Application) {
 	app.Any("/health", ctrl.Health)
 
 	app.Options("/{route:path}", middleware.CrossDomain)
+	app.Get("/metrics", http.UnGzip, iris.FromStd(promhttp.Handler()))
 
 	// user group
 	userParty := app.Party("/user")
