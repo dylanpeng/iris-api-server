@@ -185,6 +185,8 @@ func (l *Logger) getFileInfo() (file string, line int) {
 }
 
 func (l *Logger) Log(level Level, format string, args ...interface{}) {
+	fmt.Printf(format, args...)
+	fmt.Println()
 	m := &msg{level: level, format: format, args: args}
 	m.file, m.line = l.getFileInfo()
 

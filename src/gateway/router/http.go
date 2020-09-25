@@ -3,12 +3,14 @@ package router
 import (
 	"github.com/kataras/iris"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"juggernaut/common"
 	ctrl "juggernaut/gateway/logic/control"
 	"juggernaut/gateway/logic/middleware"
 	"juggernaut/lib/http"
 )
 
 func (r *router) RegHttpHandler(app *iris.Application) {
+	app.Use(common.HttpInterceptor)
 	app.Any("/health", ctrl.Health)
 
 	app.Options("/{route:path}", middleware.CrossDomain)

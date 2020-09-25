@@ -42,6 +42,9 @@ func main() {
 		log.Fatalf("Fatal Error: can't initialize kafka!!!\n%s", err)
 	}
 
+	// init prometheus
+	common.InitPrometheus()
+
 	// init grpc pool
 	common.InitGrpcSrv(config.GetGrpcSrv())
 
