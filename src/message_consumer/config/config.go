@@ -5,6 +5,7 @@ import (
 	"juggernaut/common/env"
 	"juggernaut/lib/kafka"
 	"juggernaut/lib/logger"
+	"juggernaut/lib/rocketmq"
 )
 
 var config *Config
@@ -13,6 +14,7 @@ type Config struct {
 	Env      *env.Config                      `toml:"env"`
 	Consumer map[string]*kafka.ConsumerConfig `toml:"kafka_consumer"`
 	Log      *logger.Config                   `toml:"log"`
+	Rocket   *rocketmq.RocketConfig           `toml:"rocket"`
 }
 
 func Init(file string) error {
@@ -26,6 +28,20 @@ func Init(file string) error {
 
 	if env.Debug {
 		config.Log.Level = logger.Levels[logger.DebugLevel].Name
+	}
+
+	if config.Rocket != nil {
+		if config.Rocket.Producers != nil {
+			for _, v := range config.Rocket.Producers {
+				v.ConnectConfig = config.Rocket.ConnectConfig
+			}
+		}
+
+		if config.Rocket.Consumers != nil {
+			for _, v := range config.Rocket.Consumers {
+				v.ConnectConfig = config.Rocket.ConnectConfig
+			}
+		}
 	}
 
 	return nil

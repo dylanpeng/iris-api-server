@@ -61,3 +61,17 @@ topic           = "test"
 group           = "a"
 worker          = 2
 offset_newest   = true
+
+[rocket]
+name_servers  = [ "127.0.0.1:9876" ]
+
+[rocket.producer.test]
+topic            = "test"
+
+[rocket.consumer.test]
+topic            = "test"
+group_name       = "testGroup"
+tag              = ""
+worker           = 4
+msg_num_once     = 5
+msg_loop_seconds = 10

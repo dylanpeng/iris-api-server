@@ -1,10 +1,13 @@
 package common
 
 import (
+	"fmt"
+	"github.com/apache/rocketmq-client-go/v2/primitive"
 	"github.com/kataras/iris/context"
 	"github.com/prometheus/client_golang/prometheus"
 	"juggernaut/common/grpc"
 	"juggernaut/lib/logger"
+	"juggernaut/lib/rocketmq"
 	"strconv"
 	"time"
 )
@@ -12,6 +15,9 @@ import (
 var Logger *logger.Logger
 var HttpServerCounterVec *prometheus.CounterVec
 var HttpServerTimerVec *prometheus.HistogramVec
+
+//var QueueProducers = map[string]*rocketmq.Producer{}
+var QueueConsumers = map[string]*rocketmq.Consumer{}
 
 func InitLogger(config *logger.Config) (err error) {
 	Logger, err = logger.NewLogger(config)
@@ -58,4 +64,31 @@ func HttpInterceptor(ctx context.Context) {
 
 	HttpServerCounterVec.WithLabelValues(labels...).Inc()
 	HttpServerTimerVec.WithLabelValues(labels...).Observe(duration)
+}
+
+func InitQueueConsumers(confs map[string]*rocketmq.ConsumerConfig, handlers map[string]func(*primitive.MessageExt) error) (err error) {
+	//if Logger == nil {
+	//	return errors.New("logger uninitialized")
+	//}
+
+	for name, handler := range handlers {
+		conf := confs[name]
+
+		if conf == nil {
+			err = fmt.Errorf("config not found: %s", name)
+			return
+		}
+
+		if QueueConsumers[name], err = rocketmq.NewConsumer(conf, handler); err != nil {
+			return
+		}
+	}
+
+	return
+}
+
+func StopQueueConsumers() {
+	for _, consumer := range QueueConsumers {
+		consumer.Stop()
+	}
 }

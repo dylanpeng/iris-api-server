@@ -7,6 +7,7 @@ require (
 	github.com/Joker/jade v1.0.0 // indirect
 	github.com/Shopify/goreferrer v0.0.0-20181106222321-ec9c9a553398 // indirect
 	github.com/Shopify/sarama v1.26.4
+	github.com/apache/rocketmq-client-go/v2 v2.0.0
 	github.com/aymerick/raymond v2.0.2+incompatible // indirect
 	github.com/bsm/sarama-cluster v2.1.15+incompatible
 	github.com/eknkc/amber v0.0.0-20171010120322-cdade1c07385 // indirect
