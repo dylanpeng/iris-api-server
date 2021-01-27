@@ -1,6 +1,7 @@
 package common
 
 import (
+	"errors"
 	"fmt"
 	"github.com/apache/rocketmq-client-go/v2/primitive"
 	"github.com/kataras/iris/context"
@@ -16,7 +17,7 @@ var Logger *logger.Logger
 var HttpServerCounterVec *prometheus.CounterVec
 var HttpServerTimerVec *prometheus.HistogramVec
 
-//var QueueProducers = map[string]*rocketmq.Producer{}
+var QueueProducers = map[string]*rocketmq.Producer{}
 var QueueConsumers = map[string]*rocketmq.Consumer{}
 
 func InitLogger(config *logger.Config) (err error) {
@@ -64,6 +65,28 @@ func HttpInterceptor(ctx context.Context) {
 
 	HttpServerCounterVec.WithLabelValues(labels...).Inc()
 	HttpServerTimerVec.WithLabelValues(labels...).Observe(duration)
+}
+
+func InitQueueProducers(confs map[string]*rocketmq.ProducerConfig) (err error) {
+	if Logger == nil {
+		return errors.New("logger uninitialized")
+	}
+
+	for name, conf := range confs {
+		QueueProducers[name], err = rocketmq.NewProducer(conf, Logger)
+
+		if err != nil {
+			return
+		}
+	}
+
+	return
+}
+
+func StopQueueProducers() {
+	for _, producer := range QueueProducers {
+		_ = producer.Stop()
+	}
 }
 
 func InitQueueConsumers(confs map[string]*rocketmq.ConsumerConfig, handlers map[string]func(*primitive.MessageExt) error) (err error) {
