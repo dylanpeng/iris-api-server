@@ -6,6 +6,6 @@ import (
 )
 
 func RocketConsumerTest(msg *primitive.MessageExt) error {
-	fmt.Printf("in\n")
+	fmt.Printf("in\n msg: %+v", msg)
 	return nil
 }

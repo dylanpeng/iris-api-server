@@ -52,6 +52,17 @@ func main() {
 		log.Fatalf("Fatal Error: can't initialize mq consumer!!!\n%s", err)
 	}
 
+	// init queue producer
+	if err := common.InitQueueProducers(config.GetConfig().Rocket.Producers); err != nil {
+		log.Fatalf("Fatal Error: can't initialize queue producer!!!\n%s", err)
+	}
+
+	//p := common.QueueProducers["test"]
+	//_ = p.Send(&rocketmq.Message{
+	//	Tag:     "",
+	//	Payload: []byte("aaa1"),
+	//})
+
 	// waitting for exit signal
 	exit := make(chan os.Signal)
 	stopSigs := []os.Signal{
