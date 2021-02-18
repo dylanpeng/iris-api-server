@@ -19,6 +19,7 @@ func (c *gatewayCtrl) Push(ctx context.Context, req *opGateway.TestReq) (rsp *op
 		Trace:    req.Trace,
 	}
 
+	// log
 	common.Logger.Debugf("grpc push return. | req: %s | rsp: %s", req, rsp)
 	return
 }
